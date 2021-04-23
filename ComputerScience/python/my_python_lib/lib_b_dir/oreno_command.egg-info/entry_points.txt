@@ -1,0 +1,3 @@
+[console_scripts]
+oreno_command = oreno_command.oreno_command:main
+
