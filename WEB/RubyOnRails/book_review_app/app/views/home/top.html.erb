@@ -1,0 +1,17 @@
+<h1>技術ブログ</h1>
+
+<div class="cats-block">  
+ <% @categories.each do |cat| %>
+   <li class="each-cat"><%= cat.name %></li>
+ <% end %>
+</div>
+
+<ul class="books-block">
+  <% @books.each do |book| %>
+    <div class="each-book">
+      <li class="each-book-title"><%= book.title %></li>
+      <li class="each-book-author"><%= book.author %></li>
+      <li class="each-book-published"><%= book.published %></li>
+    </div>
+  <% end %>
+</ul>

@@ -1,2 +1,1 @@
-# portfolio
-# portfolio
+これはポートフォリオ用のリポジトリです
