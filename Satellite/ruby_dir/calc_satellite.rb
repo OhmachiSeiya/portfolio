@@ -1,4 +1,5 @@
 # コマンド例： ruby calc_satellite.rb 1 7078 0 0 0
+# または mruby -b ruby_dir/calc_satellite.mrb 1 7078 0 0 0
 
 command_num = ARGV[0].to_i
 a = ARGV[1].to_f
