@@ -1,1 +1,1 @@
-これはポートフォリオ用のリポジトリです
+repository for portfolios
