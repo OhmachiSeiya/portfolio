@@ -1,5 +1,5 @@
 # コマンド例： ruby calc_satellite.rb 1 7078 0 0 0
-# または mruby -b ruby_dir/calc_satellite.mrb 1 7078 0 0 0
+# または mruby -b calc_satellite.mrb 1 7078 0 0 0
 
 command_num = ARGV[0].to_i
 a = ARGV[1].to_f
@@ -55,29 +55,34 @@ class CalcSatellite
     if cond
       return "OK"
     else
-      return "iとaを修正してください"
+      return "iとaを修正してください。"
     end
   end
 end
 
-cs = CalcSatellite.new()
-
-if command_num == 1
-  v = cs.velocity(a,e,theta)
-  puts "速さは#{v}"
-elsif command_num == 2
-  v = cs.velocity(a,e,theta)
-  t = cs.periodic_time(a)
-  puts "速さは#{v}"
-  puts "周期は#{t}"
-elsif command_num == 3
-  c = cs.sso_check(a,e,i)
-  puts c
-elsif command_num == 4
-  c_2 = cs.sso_check(a,e,i,tolerance=10**-9)
-  puts c_2
-else
-  puts "コマンドは1~4"
+begin 
+  cs = CalcSatellite.new()
+ 
+  if command_num == 1
+    v = cs.velocity(a,e,theta)
+    puts "速さは#{v}"
+  elsif command_num == 2
+    v = cs.velocity(a,e,theta)
+    t = cs.periodic_time(a)
+    puts "速さは#{v}"
+    puts "周期は#{t}"
+  elsif command_num == 3
+    c = cs.sso_check(a,e,i)
+    puts c
+  elsif command_num == 4
+    c_2 = cs.sso_check(a,e,i,tolerance=10**-9)
+    puts c_2
+  else
+    puts "コマンドは1~4です。"
+  end
+rescue => e
+  puts "エラーが発生しました。"
+  puts e.message
+ensure 
+  puts "コマンドを終了します。"
 end
-
-
