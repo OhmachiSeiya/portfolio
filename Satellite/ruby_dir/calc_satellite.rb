@@ -146,7 +146,6 @@ module CalcSat
 end
 
 begin 
- 
   if command_num == 1
     orb = CalcSat::Orbita.new()
     v = orb.velocity(a,e,theta)
