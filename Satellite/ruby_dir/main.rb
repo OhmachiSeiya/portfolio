@@ -1,6 +1,5 @@
 # コマンド例： ruby calc_satellite.rb 1 7078 0 0 0
 # または mruby -b calc_satellite.mrb 1 7078 0 0 0
-require 'numo/narray'
 require './calc_satellite'
 
 command_num = ARGV[0].to_i
