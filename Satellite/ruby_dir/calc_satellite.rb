@@ -13,9 +13,10 @@ elsif command_num == 3
   m,b_s, y_air,f_air, y_sun,f_sun = ARGV[1].to_f, ARGV[2].to_f, ARGV[3].to_f, ARGV[4].to_f, ARGV[5].to_f, ARGV[6].to_f
 end
 
-
 module CalcSat
-  # 参考文献： 「人工衛星をつくる（宮崎康行 著）」
+  # 参考文献：
+  # 「人工衛星をつくる（宮崎康行 著）」
+  # 「CanSat 超小型模擬人工衛星（大学宇宙工学コンソーシアム）」
   class Orbita
     #  a … 楕円軌道の長半径
     #  e … 楕円の離心率（地球が楕円の中心からどれだけの割合ずれているかを表す）
@@ -141,6 +142,48 @@ module CalcSat
   
     def kt0
       @pt0.dot(@ht0.transpose).dot(Matrix[*st0.to_a].inv.to_a)
+    end
+  end
+  class Electricity
+    def simple_quote(s_eff, s_cell, p_cell, t_d)
+      # 簡単な見積もりとして、一回の日照時間中の太陽電池パネル全体の発電量u_spを計算する
+      # t_d: 平均日照時間
+      # s_eff: 平均的な面積
+      # s_cell: 太陽電池セル一枚あたりの面積
+      # p_cell: 太陽電池セル一枚あたりの発電電力
+
+      u_sp = (s_eff / s_cell) * p_cell * t_d
+    end
+  end
+
+  class Heat
+    def initialize
+      @sigma = 5.669 * 10**-8 # [W/(m**2/K**4)] ステファン・ボルツマン定数
+    end
+    def thermodynamic_equilibrium_part()
+      # パーツ一つで近似する場合の熱平衡方程式
+      # m: 衛星の質量
+      # c: 衛星材料全体の平均的な比熱
+      # t_capital: 衛星の温度
+      # t: 時間
+      # q_t: 衛星の外部から入ってくるトータルの熱量と衛星地震の発熱の総和
+      # epsilon: 太陽電池パネルの平均的な放射率
+
+      left = m * c * (d*t_capital/ d*t)
+      right = q_t - epsilon * @sigma * a_capital * f_s * t_capital**4
+      cond = left == right
+      return cond
+    end
+  end
+
+  class Construction
+    def static_load_analysis()
+      # 静荷重解析
+      test = 1
+    end
+    def modal_analysis()
+      # 固有振動解析
+      test = 2
     end
   end
 end
