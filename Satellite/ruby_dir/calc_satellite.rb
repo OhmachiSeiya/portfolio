@@ -7,6 +7,7 @@ module CalcSat
   # 「人工衛星をつくる（宮崎康行 著）」
   # 「CanSat 超小型模擬人工衛星（大学宇宙工学コンソーシアム）」
   class Orbita
+    # 軌道計算
     #  a … 楕円軌道の長半径
     #  e … 楕円の離心率（地球が楕円の中心からどれだけの割合ずれているかを表す）
     #  i … 軌道傾斜角（楕円軌道面と赤道面がなす角度）
@@ -20,6 +21,7 @@ module CalcSat
     end
   
     def velocity(a,e,theta)
+      # 速度
       v = Math.sqrt(
         @m_e * (1 + e**2 + 2*e*Math.cos(theta)) / 
         a * (1 - e**2)
@@ -28,6 +30,7 @@ module CalcSat
     end
   
     def periodic_time(a)
+      # 周期
       t = 2*Math::PI*(a**1.5 / Math.sqrt(@m_e))
       return t
     end
@@ -89,6 +92,7 @@ module CalcSat
   class Posture
     # 姿勢
     def torque(m,b_s, y_air,f_air, y_sun,f_sun)
+      # 外乱トルク
       n_mag = m * b_s
       n_air = y_air * f_air
       n_sun = y_sun * f_sun
@@ -98,6 +102,8 @@ module CalcSat
   end
 
   class Kalman
+    # カルマンフィルタ:
+    # 状態方程式を計算して姿勢を予測しつつ、実測データと繰り返し比較して予測値を修正していく
     include Numo
   
     attr_accessor :ft0, :pt1, :qt0, :gt0, :xht1, :ht0, :rt0
@@ -133,6 +139,7 @@ module CalcSat
       @pt0.dot(@ht0.transpose).dot(Matrix[*st0.to_a].inv.to_a)
     end
   end
+
   class Electricity
     def simple_quote(s_eff, s_cell, p_cell, t_d)
       # 簡単な見積もりとして、一回の日照時間中の太陽電池パネル全体の発電量u_spを計算する
@@ -165,15 +172,5 @@ module CalcSat
     end
   end
 
-  class Construction
-    def static_load_analysis()
-      # 静荷重解析
-      test = 1
-    end
-    def modal_analysis()
-      # 固有振動解析
-      test = 2
-    end
-  end
 end
 
